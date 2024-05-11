@@ -22,7 +22,6 @@
                         <th scope="col">Data de Início</th>
                         <th scope="col">Valor da mensalidade</th>
                         <th scope="col">Data de Cadastro</th>
-                        <th scope="col">Data de Saída</th>
                         <th scope="col">Data de finalização</th>
                         <th scope="col">Ações</th>
                         </tr>
@@ -41,20 +40,28 @@
                                 <td>{{ todo.dt_inicio  }}</td>
                                 <td>{{ todo.mensalidade }}</td>
                                 <td>{{ todo.created_at }}</td>
-                                <td>{{ todo.dt_saida }}</td>
                                 <td>{{ todo.finished_at|default:"-" }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-sm">Concluir</a>
-                                    <a href="#" class="btn btn-danger btn-sm">Excluir</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                        <a 
+                                            href="{% url 'todo_complete' pk=todo.pk %}" 
+                                            class="btn btn-primary btn-sm {% if todo.finished_at %}disabled{% endif %}"
+                                        >
+                                            Concluir
+                                        </a>
+                                        <a href="{% url 'todo_update' pk=todo.pk %}" 
+                                        class="btn btn-secondary btn-sm {% if todo.finished_at %}disabled{% endif %}"
+                                        >
+                                            Editar
+                                        </a>
+                                        <a href="{% url 'todo_delete' pk=todo.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
             {% else %}
                 <p>Não há alunos cadastrados</p>
             {% endif %}
-
-            <a href="{% url 'todo_create' %}" class="btn btn-primary">Novo Cadastro de Aluno</a>
+            <a href="{% url 'todo_create' %}" class="btn btn-primary">Nova Tarefa</a>
 
 {% endblock content %}
